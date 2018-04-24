@@ -1,117 +1,34 @@
 import enum
-import random
 
-# creating enumerations using class
+
+# Creating Color enumeration for head light color.
 class Color(enum.Enum):
-    GREEN = 1
-    RED = 2
-# /*
-#  * @author: Sanjay Kumar
-#  * This is Robot Model Class.
-#  */
+    GREEN = 'GREEN'
+    RED = 'RED'
+
+
+#
+#  @author: Sanjay Kumar
+#  This is Robot Model Class.
+#
 class Robot(object):
 
-  def __init__(self):
-    self._chargingStatus = 100
-    self._headLightColor = Color.GREEN.name
+    def __init__(self):
+        self._charging_status = 100
+        self._head_light_color = Color.GREEN
 
-  @property
-  def chargingStatus(self):
-    return self._chargingStatus
+    @property
+    def charging_status(self):
+        return self._charging_status
 
-  @chargingStatus.setter
-  def chargingStatus(self, value):
-    self._chargingStatus = value
+    @charging_status.setter
+    def charging_status(self, value):
+        self._charging_status = value
 
-  @property
-  def headLightColor(self):
-    return self._headLightColor
+    @property
+    def head_light_color(self):
+        return self._head_light_color
 
-  @headLightColor.setter
-  def setHeadLightColor(self, color):
-    self._headLightColor = color
-# ______________________________________________________________________________
-
-
-class RobotHealth(object):
-
-  def canCarry(self, weight):
-    if weight > 10:
-      print("Overweight")
-      print("************************************************")
-      return False
-    return True
-
-  def powerCheck(self, r, requiredCharging):
-    availbleCharging = r.chargingStatus
-    if(availbleCharging < requiredCharging):
-      print("Insufficient Charging For Task")
-      print("************************************************")
-      return False
-    else:
-      remaining = availbleCharging - requiredCharging
-      r.chargingStatus = remaining
-      if(remaining < 15):
-        r.headLightColor = Color.RED.name
-        print("*********************************************")
-      return True
-
-#____________________________________________________________________________
-
-class PrototypeRobot(object):
-
-  def __init__(self):
-    self.r = Robot()
-    self.rh = RobotHealth()
-
-  def setCharging(self, percentage):
-      currentCharging = self.r.chargingStatus
-      if(currentCharging + percentage > 100):
-        self.r.chargingStatus = 100
-      else:
-        self.r.chargingStatus = currentCharging+percentage
-
-
-  def walk(self, km):
-       requiredCharging = int(km*1000/50)
-       if self.rh.powerCheck(self.r, requiredCharging):
-         print("Walked "+str(km)+"km | Charging Used "+ str(requiredCharging) +"% | Remaining  "+ str(self.r.chargingStatus) +"%")
-         print("Robot HeadLight Color "+ self.r.headLightColor)
-         print("************************************************")
-         return True
-       return False
-
-  def carry(self, weight):
-      if self.rh.canCarry(weight):
-        requiredCharging = 2*weight
-        if self.rh.powerCheck(self.r, requiredCharging):
-          print("Carried "+ str(weight)+"kg | Charging Used "+ str(requiredCharging) +"% | Remaining  "+ str(self.r.chargingStatus) +"%")
-          print("Robot HeadLight Color "+ str(self.r.headLightColor))
-          print("************************************************")
-          return True
-      return False
-
-  def walkAndCarry(self, dist, weight):
-    if self.rh.canCarry(weight):
-      requiredCharging = (int(dist*1000/50)) + 2*weight
-      if self.rh.powerCheck(self.r, requiredCharging):
-        print("Walked "+ str(dist) + "km and Carried "+ str(weight)+"kg | Charging Used "+ str(requiredCharging) +"% | Remaining  "+ str(self.r.chargingStatus) +"%")
-        print("Robot HeadLight Color "+ self.r.headLightColor)
-        print("************************************************")
-        return True
-    return False
-
-  def displayPrice(self, barCode):
-    if(barCode % 2 == 0):
-      print("Price is "+ str(random.randint(1, 1000)))
-    else:
-      print("Scan Failure")
-
-if __name__ == "__main__":
-    obj = PrototypeRobot()
-    obj.walk(3.5)
-    obj.carry(6)
-    obj.walkAndCarry(1,13)
-    obj.setCharging(100)
-    obj.walkAndCarry(2,3)
-    obj.displayPrice(18)
+    @head_light_color.setter
+    def head_light_color(self, color):
+        self._head_light_color = color
